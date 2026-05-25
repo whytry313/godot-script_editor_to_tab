@@ -1,15 +1,21 @@
-[gd_scene load_steps=2 format=3 uid="uid://dgqgkdkne6phe"]
+[gd_scene format=3 uid="uid://dgqgkdkne6phe"]
 
-[ext_resource type="Script" uid="uid://h8byss74oo3w" path="res://addons/ScriptToTab/Interface/interface.gd" id="1_w1yf7"]
+[ext_resource type="Script" uid="uid://h8byss74oo3w" path="res://addons/ShaderToTab/Interface/interface.gd" id="1_w1yf7"]
 
-[node name="Interface" type="Control"]
+[node name="Interface" type="Control" unique_id=693910579]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 943.0
-offset_bottom = 636.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1150.0
+offset_bottom = -646.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_w1yf7")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=1285118163]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,21 +23,21 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer" unique_id=1790201070]
 layout_mode = 2
 size_flags_vertical = 3
 
-[node name="FileDock" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="FileDock" type="Control" parent="VBoxContainer/HBoxContainer" unique_id=1454953475]
 custom_minimum_size = Vector2(320, 0)
 layout_mode = 2
 
-[node name="resize" type="ColorRect" parent="VBoxContainer/HBoxContainer"]
+[node name="resize" type="ColorRect" parent="VBoxContainer/HBoxContainer" unique_id=763188654]
 custom_minimum_size = Vector2(3, 0)
 layout_mode = 2
 mouse_default_cursor_shape = 15
 color = Color(1, 1, 1, 0.0313726)
 
-[node name="handle" type="ColorRect" parent="VBoxContainer/HBoxContainer/resize"]
+[node name="handle" type="ColorRect" parent="VBoxContainer/HBoxContainer/resize" unique_id=2056023632]
 modulate = Color(1, 1, 1, 0)
 custom_minimum_size = Vector2(3, 28)
 layout_mode = 1
@@ -43,62 +49,62 @@ anchor_bottom = 0.5
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
-color = Color(0.866023, 0.443556, 0, 1)
+color = Color(7.70092e-07, 0.7238735, 0.5494618, 1)
 
-[node name="ScriptDock" type="Control" parent="VBoxContainer/HBoxContainer"]
+[node name="ScriptDock" type="Control" parent="VBoxContainer/HBoxContainer" unique_id=1215147208]
 layout_mode = 2
 size_flags_horizontal = 3
 
-[node name="Separator" type="ColorRect" parent="VBoxContainer"]
+[node name="Separator" type="ColorRect" parent="VBoxContainer" unique_id=1115999248]
 custom_minimum_size = Vector2(0, 1)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0784314)
 
-[node name="OptionsFooter" type="HBoxContainer" parent="VBoxContainer"]
+[node name="OptionsFooter" type="HBoxContainer" parent="VBoxContainer" unique_id=602213793]
 layout_mode = 2
 
-[node name="SidePanel" type="CheckBox" parent="VBoxContainer/OptionsFooter"]
+[node name="SidePanel" type="CheckBox" parent="VBoxContainer/OptionsFooter" unique_id=1277431931]
 layout_mode = 2
 tooltip_text = "Hide scripts and methods list pannel"
 text = "Hide side panel"
 
-[node name="ColorRect" type="ColorRect" parent="VBoxContainer/OptionsFooter"]
+[node name="ColorRect" type="ColorRect" parent="VBoxContainer/OptionsFooter" unique_id=1198346950]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0823529)
 
-[node name="SwitchPannels" type="CheckBox" parent="VBoxContainer/OptionsFooter"]
+[node name="SwitchPannels" type="CheckBox" parent="VBoxContainer/OptionsFooter" unique_id=593454945]
 layout_mode = 2
 tooltip_text = "Move FileExplorer to left or right"
 text = "Switch Pannels"
 
-[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/OptionsFooter"]
+[node name="ColorRect2" type="ColorRect" parent="VBoxContainer/OptionsFooter" unique_id=103872404]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 size_flags_horizontal = 3
 color = Color(1, 1, 1, 0)
 
-[node name="Label" type="Label" parent="VBoxContainer/OptionsFooter"]
+[node name="Label" type="Label" parent="VBoxContainer/OptionsFooter" unique_id=1281062586]
 modulate = Color(1, 1, 1, 0.482353)
 layout_mode = 2
 text = "Ctrl+T to toggle"
 
-[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/OptionsFooter"]
+[node name="ColorRect3" type="ColorRect" parent="VBoxContainer/OptionsFooter" unique_id=1039616289]
 custom_minimum_size = Vector2(1, 0)
 layout_mode = 2
 color = Color(1, 1, 1, 0.0823529)
 
-[node name="FileExplorer" type="CheckBox" parent="VBoxContainer/OptionsFooter"]
+[node name="FileExplorer" type="CheckBox" parent="VBoxContainer/OptionsFooter" unique_id=1199728129]
 layout_mode = 2
 tooltip_text = "Move FileExplorer to this pannel to act like an IDE"
 text = "File Explorer"
 
-[node name="RevealInFileExplorer" type="CheckBox" parent="VBoxContainer/OptionsFooter"]
+[node name="RevealInFileExplorer" type="CheckBox" parent="VBoxContainer/OptionsFooter" unique_id=1652276680]
 layout_mode = 2
 tooltip_text = "Selects the current file in File Explorer"
 text = "Show in File Explorer"
 
-[node name="IngoreAddons" type="CheckBox" parent="VBoxContainer/OptionsFooter"]
+[node name="IngoreAddons" type="CheckBox" parent="VBoxContainer/OptionsFooter" unique_id=624340242]
 layout_mode = 2
 tooltip_text = "Ignore file selection if the files is an addon"
 text = "Ignore /addons"

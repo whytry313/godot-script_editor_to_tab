@@ -19,7 +19,8 @@ func _init() -> void: # Track screen changes
 	# Create and add dock holder
 	container = Control.new();
 	container.name = tab_title
-	container.visible = false # Required to toggle visibility_changed
+	#container.visible = false # Required to toggle visibility_changed
+	container.visible = true # Required to toggle visibility_changed
 
 #func _enter_tree() -> void:
 func _install() -> void:
