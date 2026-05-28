@@ -12,6 +12,7 @@ var ScriptEditParent = null
 	set(v): FileSystem = v; install_file_manager()
 @export var ScriptEdit:MarginContainer = null:
 	set(v): ScriptEdit = v; install_script_editor()
+@export var options_footer:HBoxContainer
 
 @onready var el_fileDock:Control      = $VBoxContainer/HBoxContainer/FileDock
 @onready var el_scriptDock:Control    = $VBoxContainer/HBoxContainer/ScriptDock
@@ -121,6 +122,9 @@ func install_script_editor():
 		ScriptEditParent = ScriptEdit.get_parent()
 		#ScriptEditParent.remove_child(ScriptEdit)
 		el_scriptDock.add_child(ScriptEdit)
+		ScriptEdit.size = el_scriptDock.size
+		ScriptEdit.size_flags_horizontal = Control.SIZE_EXPAND_FILL
+		ScriptEdit.size_flags_vertical = Control.SIZE_EXPAND_FILL
 		#ScriptEdit.connect("editor_script_changed", on_script_changed)
 		set_panel_props(ScriptEdit)
 
@@ -136,6 +140,18 @@ func on_script_changed(script:Script):
 func resize_panels():
 	if !is_inside_tree(): return
 	size = get_parent().size
+	if ScriptEdit:
+		el_scriptDock.size = el_scriptDock.get_parent().size
+		ScriptEdit.size = el_scriptDock.size
+		if options_footer:
+			ScriptEdit.size.y = ScriptEdit.size.y-options_footer.size.y
+		ScriptEdit.position = Vector2.ZERO
+		#ScriptEdit.anchor_top = 0.5
+		#ScriptEdit.anchor_bottom = 0.5
+		#ScriptEdit.anchor_left = 0.5
+		#ScriptEdit.anchor_right = 0.5
+		#ScriptEdit.size_flags_horizontal = Control.SIZE_FILL
+		#ScriptEdit.size_flags_vertical = Control.SIZE_FILL
 	#if ScriptEdit: ScriptEdit.size = ScriptEdit.get_parent().size
 	if FileSystem: FileSystem.size = FileSystem.get_parent().size
 
@@ -185,8 +201,10 @@ func toggle_file_explorer(val:bool):
 
 func toggle_script_panel(val:bool):
 	opt_hide_side_panel.button_pressed = val
-	var script_list = find_or_null(ScriptEdit.find_children("*", "VSplitContainer", true, false))
-	if script_list: script_list.visible = !opt_hide_side_panel.button_pressed
+	var script_list = find_or_null(ScriptEdit.find_children("*", "ItemList", true, false))
+	if script_list:
+		script_list.visible = !opt_hide_side_panel.button_pressed
+		script_list.custom_minimum_size = Vector2(100.0, 60.0) if script_list.visible else Vector2.ZERO;
 	settings_changed.emit()
 
 

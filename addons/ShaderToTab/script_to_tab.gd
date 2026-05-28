@@ -49,15 +49,12 @@ func _install() -> void:
 			last_position = pos_value as DockSlot
 		
 
-	connect("main_screen_changed", on_scene_change)
+	#connect("main_screen_changed", on_scene_change)
 	add_control_to_dock(last_position, container)
 	var editor_interface = get_editor_interface()
 	interface.settings = settings
 	container.add_child(interface) # Move the script editor to holder
 	shader_editor_container = MarginContainer.new()
-	shader_editor_container.size_flags_horizontal = Control.SIZE_EXPAND_FILL
-	shader_editor_container.size_flags_vertical = Control.SIZE_EXPAND_FILL
-	shader_editor_container.custom_minimum_size = Vector2(80,80)
 	for child in shader_editor.get_children():
 		child.reparent(shader_editor_container)
 	interface.ScriptEdit = shader_editor_container
@@ -65,16 +62,6 @@ func _install() -> void:
 	interface._install()
 	interface.size = container.size
 	interface.connect('settings_changed', save_settings)
-
-	#container.connect("visibility_changed", interface._enter_tree)
-	#toolbar_button = get_dock_button("Script")
-	## await get_tree().create_timer(2.0).timeout
-	#if toolbar_button:
-		#toolbar_values.posix = toolbar_button.get_index()
-		#toolbar_button.get_parent().move_child(toolbar_button, 0)
-		#toolbar_button.scale = Vector2(0.0, 0.0)
-		#toolbar_button.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		#toolbar_button.modulate = Color(1.0,1.0,1.0,0.0)
 
 func focus_on_tab() -> void:
 	if container and container.get_parent():
@@ -93,18 +80,6 @@ func get_toolbar():
 				bar = toolbar; break
 	return bar
 
-func get_dock_button(btn_name:String): # Helper adding BettertoolbarTabs addon integration
-	var btn = null
-	for child in get_toolbar().get_children():
-		if child.name == btn_name: btn = child
-	return btn # Break if found
-
-func open_last_tab(_toggled:bool) -> void: focus_on_tab(); call_deferred("def_open_last_tab")
-func def_open_last_tab()          -> void: get_dock_button(last_selected_dock).pressed.emit()
-
-func on_scene_change(dock_name:String) -> void:
-	if dock_name != "Script": last_selected_dock = dock_name
-	else: open_last_tab(false)
 
 func save_settings():
 	var editor_settings:EditorSettings = get_editor_interface().get_editor_settings()
@@ -117,12 +92,6 @@ func _exit_tree() -> void:
 	for child in shader_editor_container.get_children():
 		child.reparent(shader_editor)
 
-	if toolbar_button:
-		toolbar_button.get_parent().move_child(toolbar_button, toolbar_values.posix)
-		toolbar_button.scale = Vector2(1.0, 1.0)
-		toolbar_button.modulate = Color(1.0,1.0,1.0,1.0)
-		toolbar_button.mouse_filter = Control.MOUSE_FILTER_STOP
-	#container.disconnect("visibility_changed", interface._enter_tree)
 	interface.disconnect('settings_changed', save_settings)
 	var dock_slot:DockSlot = get_dock_enum(container.get_parent()) as DockSlot
 	var editor_settings:EditorSettings = get_editor_interface().get_editor_settings()
