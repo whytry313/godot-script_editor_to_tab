@@ -15,7 +15,7 @@ var settings_data:Dictionary = {
 var toolbar_button:Button # The button be hidden
 var toolbar_values:Dictionary = { "posix": 0 }
 
-var shader_editor:EditorDock
+var shader_editor # EditorDock only in 4.6
 var shader_editor_container:Control
 
 func _init() -> void: # Track screen changes
@@ -115,21 +115,27 @@ func get_dock_enum(node:Node) -> int:
 		return dock_slot_map[node.name]
 	return -1
 
-func get_shader_editor() -> EditorDock:
+func get_shader_editor():
 	var base := get_editor_interface().get_base_control()
-	return _find_node_recursive(base, "Shader Editor")
+	#print(get_editor_interface().get_base_control().get_children())
+	var version_info = Engine.get_version_info()
+	var v = str(version_info.major) + "." + str(version_info.minor)
+	if v == "4.6": return _find_node_recursive(base, "Shader Editor")
+	return _find_node_recursive(base, "ShaderEditor", true)
 
-func _find_node_recursive(root: Node, target: String) -> Node:
+func _find_node_recursive(root: Node, target: String, partial:bool = false) -> Node:
+	if partial and root.name.to_lower().find(target.to_lower()) > -1:
+		return root
 	if root.name == target:
 		return root
 	for c in root.get_children():
-		var found = _find_node_recursive(c, target)
-		if found:
-			return found
+		var found = _find_node_recursive(c, target, partial)
+		if found: return found
 	return null
 
 func _ready():
 	shader_editor = get_shader_editor()
+	print(shader_editor)
 	if debugging: return
 	var fileSystem := EditorInterface.get_resource_filesystem()
 	if fileSystem.is_scanning():
