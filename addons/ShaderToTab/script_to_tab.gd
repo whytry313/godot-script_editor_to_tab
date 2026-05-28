@@ -121,17 +121,28 @@ func get_shader_editor():
 	var version_info = Engine.get_version_info()
 	var v = str(version_info.major) + "." + str(version_info.minor)
 	if v == "4.6": return _find_node_recursive(base, "Shader Editor")
-	return _find_node_recursive(base, "ShaderEditor", true)
+	var bottomPanel = _find_node_recursive(base, "EditorBottomPanel", true)
+	var shaderElement = _find_node_recursive(bottomPanel, "ShaderCreateDialog", true)
+	return _find_node_recursive_up(shaderElement, "Window", true)
 
 func _find_node_recursive(root: Node, target: String, partial:bool = false) -> Node:
-	if partial and root.name.to_lower().find(target.to_lower()) > -1:
-		return root
-	if root.name == target:
-		return root
+	if !root: return root
+	if partial and root.name.to_lower().find(target.to_lower()) > -1: return root
+	if root.name == target: return root
 	for c in root.get_children():
 		var found = _find_node_recursive(c, target, partial)
 		if found: return found
 	return null
+
+func _find_node_recursive_up(root: Node, target: String, partial:bool = false) -> Node:
+	if !root: return root
+	var found:Node = null
+	var node:Node = root
+	while(found == null and node.has_method("get_parent")):
+		if partial and node.name.to_lower().find(target.to_lower()) > -1: found = node
+		if node.name == target: found = node
+		node = node.get_parent()
+	return found
 
 func _ready():
 	shader_editor = get_shader_editor()
